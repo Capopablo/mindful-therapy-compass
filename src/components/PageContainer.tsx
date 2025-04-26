@@ -1,0 +1,38 @@
+
+import { Link } from "react-router-dom";
+import { ArrowUp } from "lucide-react";
+import { Button } from "@/components/ui/button";
+
+interface PageContainerProps {
+  title: string;
+  subtitle?: string;
+  children: React.ReactNode;
+}
+
+const PageContainer = ({ title, subtitle, children }: PageContainerProps) => {
+  return (
+    <div className="min-h-screen bg-gradient-to-b from-slate-50 to-slate-100 p-6">
+      <div className="container mx-auto max-w-4xl">
+        <div className="flex justify-between items-center mb-6">
+          <Link to="/" className="text-slate-600 hover:text-slate-800">
+            <Button variant="ghost" className="gap-2">
+              <ArrowUp className="h-4 w-4 rotate-[-90deg]" />
+              Volver
+            </Button>
+          </Link>
+        </div>
+        
+        <div className="text-center mb-8">
+          <h1 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-blue-600 to-teal-600 text-transparent bg-clip-text mb-2">
+            {title}
+          </h1>
+          {subtitle && <p className="text-slate-600 text-base md:text-lg">{subtitle}</p>}
+        </div>
+
+        {children}
+      </div>
+    </div>
+  );
+};
+
+export default PageContainer;
