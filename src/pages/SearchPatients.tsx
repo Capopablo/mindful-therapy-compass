@@ -120,7 +120,7 @@ const SearchPatients = () => {
                 <SelectValue placeholder="Filtrar por edad" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="">Todas las edades</SelectItem>
+                <SelectItem value="all">Todas las edades</SelectItem>
                 <SelectItem value="0-18">0-18 años</SelectItem>
                 <SelectItem value="19-30">19-30 años</SelectItem>
                 <SelectItem value="31-50">31-50 años</SelectItem>
