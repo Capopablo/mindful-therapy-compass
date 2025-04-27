@@ -1,12 +1,17 @@
-
 import { useState } from "react";
 import { Search } from "lucide-react";
 import PageContainer from "@/components/PageContainer";
 import SessionCard from "@/components/SessionCard";
 import { Input } from "@/components/ui/input";
 import { Card } from "@/components/ui/card";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
-// Mock de datos para mostrar
 const mockPatients = [
   { id: "1", name: "Juan Pérez" },
   { id: "2", name: "María García" },
@@ -56,6 +61,10 @@ const PatientHistory = () => {
   const filteredPatients = mockPatients.filter((patient) =>
     patient.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
+
+  const sortedPatients = [...mockPatients].sort((a, b) => 
+    a.name.localeCompare(b.name)
+  );
   
   const sessions = selectedPatient ? mockSessions[selectedPatient as keyof typeof mockSessions] || [] : [];
 
@@ -65,6 +74,25 @@ const PatientHistory = () => {
       subtitle="Consulta el historial completo de sesiones"
     >
       <div className="space-y-6">
+        <Select
+          onValueChange={(value) => {
+            setSelectedPatient(value);
+            setSearchTerm("");
+          }}
+          value={selectedPatient || ""}
+        >
+          <SelectTrigger className="w-full">
+            <SelectValue placeholder="Seleccionar paciente" />
+          </SelectTrigger>
+          <SelectContent>
+            {sortedPatients.map((patient) => (
+              <SelectItem key={patient.id} value={patient.id}>
+                {patient.name}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+
         <div className="relative">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 h-4 w-4" />
           <Input

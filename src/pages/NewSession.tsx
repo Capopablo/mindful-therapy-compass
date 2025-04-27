@@ -168,7 +168,7 @@ const NewSession = () => {
                   <FormItem>
                     <FormControl>
                       <EmotionalRating 
-                        label="Evaluación de la sesión por el terapeuta" 
+                        label="Evaluación nivel de éxito de la sesión para el terapeuta" 
                         value={field.value} 
                         onChange={field.onChange} 
                       />

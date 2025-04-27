@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
@@ -176,10 +175,10 @@ const NewPatient = () => {
               name="medication"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Medicación (opcional)</FormLabel>
+                  <FormLabel>Tratamiento (opcional)</FormLabel>
                   <FormControl>
                     <Textarea 
-                      placeholder="Medicación actual" 
+                      placeholder="Tratamiento actual" 
                       className="min-h-[100px]" 
                       {...field} 
                     />
