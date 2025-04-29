@@ -1,7 +1,8 @@
 
-import { Link } from "react-router-dom";
-import { ArrowUp } from "lucide-react";
+import { useNavigate, Link } from "react-router-dom";
+import { ArrowUp, LogOut } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { toast } from "@/hooks/use-toast";
 
 interface PageContainerProps {
   title: string;
@@ -10,6 +11,17 @@ interface PageContainerProps {
 }
 
 const PageContainer = ({ title, subtitle, children }: PageContainerProps) => {
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    localStorage.removeItem("isAuthenticated");
+    toast({
+      title: "Sesión cerrada",
+      description: "Has cerrado sesión exitosamente",
+    });
+    navigate("/auth");
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-slate-50 to-slate-100 p-6">
       <div className="container mx-auto max-w-4xl">
@@ -20,6 +32,15 @@ const PageContainer = ({ title, subtitle, children }: PageContainerProps) => {
               Volver
             </Button>
           </Link>
+          
+          <Button 
+            variant="outline" 
+            className="gap-2 text-slate-600"
+            onClick={handleLogout}
+          >
+            <LogOut className="h-4 w-4" />
+            Cerrar sesión
+          </Button>
         </div>
         
         <div className="text-center mb-8">
