@@ -17,12 +17,15 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 
-// Esquema de validación
+// Esquema de validación modificado para aceptar "admin"
 const loginSchema = z.object({
   email: z
     .string()
     .min(1, "El email es requerido")
-    .email("Formato de email inválido"),
+    .refine((value) => {
+      // Permitir "admin" específicamente o validar como email
+      return value === "admin" || /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+    }, "Formato de email inválido"),
   password: z.string().min(1, "La contraseña es requerida"),
 });
 
@@ -85,8 +88,8 @@ const LoginForm = () => {
               <FormLabel>Email</FormLabel>
               <FormControl>
                 <Input
-                  type="email"
-                  placeholder="tu@email.com"
+                  type="text"
+                  placeholder="tu@email.com o admin"
                   {...field}
                   disabled={isLoading}
                 />
