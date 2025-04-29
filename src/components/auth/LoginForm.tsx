@@ -43,16 +43,12 @@ const LoginForm = () => {
 
   const onSubmit = async (data: LoginFormValues) => {
     setIsLoading(true);
-    // Aquí irá la lógica para conectarse con el backend
-    // Por ahora simularemos un inicio de sesión exitoso
     try {
       console.log("Login attempt:", data.email);
       
-      // Simulación de autenticación (reemplazar con integración real)
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
-      // Mock de usuarios - esto debería venir de un backend real
-      if (data.email === "demo@example.com" && data.password === "password") {
+      // Autenticación con credenciales específicas
+      if ((data.email === "demo@example.com" && data.password === "password") || 
+          (data.email === "admin" && data.password === "admin")) {
         localStorage.setItem("isAuthenticated", "true");
         toast({
           title: "Inicio de sesión exitoso",
