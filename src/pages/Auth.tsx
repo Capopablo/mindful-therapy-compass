@@ -28,7 +28,7 @@ const Auth = () => {
               Iniciar Sesión
             </h2>
             <p className="text-sm text-slate-600">
-              Accede a tu cuenta para gestionar tus pacientes
+              Accede a tu cuenta
             </p>
             <div className="pt-2">
               <LoginForm />
