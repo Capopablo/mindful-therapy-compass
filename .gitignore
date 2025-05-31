@@ -22,3 +22,16 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Python virtual environment
+venv/
+
+
+
+# Ignorar caché de Python
+__pycache__/
+*.pyc
+
+# Ignorar variables de entorno
+.env
+
