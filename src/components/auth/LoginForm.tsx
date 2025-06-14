@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
@@ -16,14 +15,14 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import { api } from "@/lib/api"; // Importamos el servicio API
 
-// Esquema de validación modificado para aceptar "admin"
+// Esquema de validación (se mantiene igual)
 const loginSchema = z.object({
   email: z
     .string()
     .min(1, "El email es requerido")
     .refine((value) => {
-      // Permitir "admin" específicamente o validar como email
       return value === "admin" || /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
     }, "Formato de email inválido"),
   password: z.string().min(1, "La contraseña es requerida"),
@@ -47,36 +46,36 @@ const LoginForm = () => {
   const onSubmit = async (data: LoginFormValues) => {
     setIsLoading(true);
     try {
-      console.log("Login attempt:", data.email);
+      // CAMBIO CLAVE: Usamos api.auth.login (no api.login)
+      const response = await api.auth.login({
+        email: data.email,
+        password: data.password
+      });
       
-      // Autenticación con credenciales específicas
-      if ((data.email === "demo@example.com" && data.password === "password") || 
-          (data.email === "admin" && data.password === "admin")) {
-        localStorage.setItem("isAuthenticated", "true");
-        toast({
-          title: "Inicio de sesión exitoso",
-          description: "Bienvenido/a de vuelta",
-        });
-        navigate("/"); // Redirigir al dashboard
-      } else {
-        toast({
-          variant: "destructive",
-          title: "Error de autenticación",
-          description: "Credenciales incorrectas",
-        });
-      }
+      localStorage.setItem("authToken", response.data.token);
+      localStorage.setItem("user", JSON.stringify(response.data.user));
+      
+      toast({
+        title: "Inicio de sesión exitoso",
+        description: "Bienvenido/a de vuelta",
+      });
+      navigate("/");
+      
     } catch (error) {
-      console.error("Error de autenticación:", error);
       toast({
         variant: "destructive",
-        title: "Error",
-        description: "Ocurrió un problema al iniciar sesión",
+        title: "Error de autenticación",
+        description: "Credenciales incorrectas",
       });
     } finally {
       setIsLoading(false);
     }
   };
 
+  /* 
+   * El resto del formulario (JSX) se mantiene EXACTAMENTE IGUAL
+   * No necesitas modificar nada más
+   */
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">

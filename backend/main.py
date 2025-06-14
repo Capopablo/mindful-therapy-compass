@@ -7,9 +7,26 @@ from models import Therapist, Patient, Session  # Importamos los modelos necesar
 from auth import get_password_hash
 from schemas import TherapistCreate
 from datetime import datetime  # Para manejar fechas
+from auth import create_admin_user
+
+
 
 # Crea las tablas en la base de datos (solo para desarrollo)
 Base.metadata.create_all(bind=engine)
+
+
+# Crea el usuario admin al iniciar (solo en desarrollo)
+if __name__ == "__main__":
+    from database import SessionLocal
+    db = SessionLocal()
+    
+    try:
+        from auth import create_admin_user
+        create_admin_user(db)
+    except Exception as e:
+        print("❌ Error:", str(e))
+    finally:
+        db.close()
 
 app = FastAPI()
 
